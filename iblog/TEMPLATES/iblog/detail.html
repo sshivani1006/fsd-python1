@@ -1,0 +1,90 @@
+{% extends 'iblog/base.html' %}
+
+ {% block title %} Content {% endblock %}
+
+    {% block content %}
+
+    <h1> {{session}}</h1>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-9 sm-12">
+                    <div class="card">
+                      <h5 class="card-header">Featured</h5>
+
+                      <div class="card-body">
+                        <h5 class="card-title">{{record.ptitle | safe}}</h5>
+                        <img src="/media/{{record.post_img}}" class="responsive-img" alt="...">
+                        <p class="card-text">
+                            {{record.pcontent | safe}}
+                        </p>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 sm-12">
+
+                          {% for c in cats %}
+
+                            <div class="card text-center mb-3">
+
+                                <div class="img-container">
+
+                                    <img src="/media/{{c.image}}" class="img-fluid"  alt="...">
+
+                                 </div>
+
+                                <div class="card-content">
+
+                                    <div class="card-title">
+                                        <b>
+                                            {{c.title}}
+                                        </b>
+                                    </div>
+                                    <p class="text-truncate">{{c.description}}</p>
+                                    <div class="container text-center mt-10 mb-2">
+                                        <a href="/iblog/category/{{c.url}}" class="btn bg-primary">VIEW</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {% endfor %}
+                </div>
+            </div>
+         </div>
+
+                <div class="container">
+                    <h2>Comments ({{comments.count}})</h2>
+                    <div class="my-2">
+                        {% if user.is_authenticated %}
+
+                        <form action="/iblog/postComment" method="post">
+                            {% csrf_token %}
+
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Post Comment</label>
+                            <input type="text"  class="form-control" placeholder="Comment here" name="comment" id="exampleInputEmail1">
+                          </div>
+
+                          <input type="hidden" name="post_id" value="{{record.post_id}}">
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        {% else %}
+                            <p>Please login to post comment</p>
+                        {% endif %}
+                    </div>
+                    {% for comment in comments %}
+                    <div class="row my-3">
+                        <div class="col-ml-2">
+                            <img src="/media/usericon.png" alt="user">
+                        </div>
+                        <div class="col-ml-10">
+                            <b>{{comment.user.username}}</b> at {{comment.created}}
+                            <div>{{comment.message}}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+    {% endblock %}

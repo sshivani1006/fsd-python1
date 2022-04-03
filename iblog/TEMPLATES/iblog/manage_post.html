@@ -1,0 +1,44 @@
+{% extends 'iblog/base.html' %}
+
+ {% block title %}Login Page {% endblock %}
+
+    {% block content %}
+<h1>{{msg}}</h1>
+<h1>{{session}}</h1>
+
+<div class="container">
+   <div class="row">
+        <div class="container-fluid">
+            <table class="table table-hover">
+                <tr class="table-dark">
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Content</th>
+                    <th>Date</th>
+                    <th>url</th>
+                    <th>Img</th>
+                    <th>pauthor</th>
+                    <th>Action</th>
+                </tr>
+                {% for x in data %}
+                    <tr>
+                        <td>{{x.post_id}}</td>
+                        <td>{{x.ptitle | safe}}</td>
+                        <td>{{x.pcategory}}</td>
+                        <td>{{x.pcontent |truncatewords:30| safe}}</td>
+                        <td>{{x.pdate}}</td>
+                        <td>{{x.purl}}</td>
+                        <td>{{x.post_img}}</td>
+                        <td>{{x.pauthor}}</td>
+                        <td><a href="{% url 'action' %}?data={{x.post_id}}" class="btn btn-danger" onclick="return confirm('Do you want to delete the record?')">Delete</a>
+                         <br><br><a href="{% url 'edit' %}?data1={{x.post_id}}" class="btn btn-success">Edit</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+   </div>
+</div>
+
+    {% endblock %}

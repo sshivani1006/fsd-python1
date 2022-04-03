@@ -1,0 +1,65 @@
+{% extends 'iblog/base.html' %}
+
+ {% block title %}Edit Post {% endblock %}
+
+    {% block content %}
+
+<div class="container">
+   <div class="row">
+        <div class="col-nd-6 col-lg-6 col-xl-6 mx-auto">
+            <form method="post" enctype="multipart/form-data" action="info_update">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="post_id">Post_id</label>
+                    <input type="text" class="form-control" id="post_id" name="post_id" value="{{data2.post_id}}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="ptitle">Post Title</label>
+                    <input type="text" class="form-control" id="ptitle" name="ptitle" value="{{data2.ptitle}}">
+                </div>
+                <div class="form-group>
+                    <label for="pcategory">Post Category</label>
+                    <!--  <input type="text" class="form-control" id="pcategory" name="pcategory" value="{{data2.pcategory}}" readonly>
+                    -->
+                    <select name="pcategory" class="form-control" id="pcategory">
+                          {% for a in allrec %}
+                          <option value="{{a.title}}">{{a.title}}</option>
+                          {% endfor %}
+                    </select>
+
+                </div>
+                <div class="form-group">
+                    <label for="pcontent">Post Content</label>
+                    <input type="text" class="form-control" id="pcontent" name="pcontent" value="{{data2.pcontent |safe}}">
+                </div>
+                <div class="form-group">
+                    <label for="pdate">Date</label>
+                    <input type="date" class="form-control" id="pdate" name="pdate" value="{{data2.pdate}}">
+                </div>
+                    <div class="form-group">
+                    <label for="purl">Url</label>
+                    <input type="text" class="form-control" id="purl" name="purl" value="{{data2.purl}}">
+                </div>
+                <div class="form-group">
+                    <label for="post_img">Post Image</label>
+                    <input type="file" class="form-control" id="post_img" name="post_img" value="{{data2.post_img}}">
+                </div>
+                <div class="form-group">
+                    <label for="pauthor">Author</label>
+                     <!-- <input type="text" class="form-control" id="pauthor" name="pauthor" value="{{data2.pauthor}}" readonly>
+                      -->
+                    <select name="pauthor" class="form-control" id="pauthor">
+                        {%for pauthor in auth %}
+                            <option value="{{pauthor.id}}">{{pauthor.name}}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+                <input type="submit" class="btn btn-primary" name="btn" value="Update" onclick="return confirm('Do you want to update data?')">
+                <a href="manage_post" class="btn btn-danger">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

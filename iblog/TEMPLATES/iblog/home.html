@@ -1,0 +1,68 @@
+{% extends 'iblog/base.html' %}
+
+ {% block title %}Home Page {% endblock %}
+ {% block content %}
+    <h1>{{session}}</h1>
+<div class="container">
+    <div class="owl-carousel">
+      {% for c in cats %}
+
+        <div class="card">
+
+            <div class="img-container">
+
+                <img src="/media/{{c.image}}" class="img-fluid" style="height:14rem;" alt="...">
+
+             </div>
+
+            <div class="card-content">
+
+                <div class="card-title">
+                  <b>
+                    {{c.title}}
+                  </b>
+                </div>
+                <p class="text-truncate">{{c.description}}</p>
+                <div class="container text-center mt-10 mb-2">
+                    <a href="category/{{c.url}}" class="btn bg-primary">VIEW</a>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+  <div class="container mt-5 mb-5">
+
+   <h3 class="mb-3">Read the best blogs</h3>
+
+    <div class="row">
+
+          {% for p in posts %}
+        <div class="col-lg-4">
+        <div class="card shadow" style="width: 18rem;">
+           <img src="/media/{{p.post_img}}" class="card-img-top responsive-img" style="height:160px;" alt="...">
+           <div class="card-body">
+                <h5 class="card-title">{{p.ptitle | safe}}</h5>
+                <p class="card-text">{{p.pcontent |truncatewords:30 | safe}}</p>
+
+               <button class="btn btn-success text-white">
+                   <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+               </button>
+             <a href="/iblog/{{p.purl}}" class="btn btn-danger">Read More</a>
+           </div>
+        </div>
+    </div>
+          {% endfor %}
+
+
+
+    </div>
+  </div>
+
+
+ {% endblock %}
